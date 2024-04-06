@@ -1,1 +1,2 @@
 Note: You must activate the virtual environment every time you open the command prompt to work on your project.
+# source myworld/bin/activate
