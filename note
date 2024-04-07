@@ -1,2 +1,58 @@
 Note: You must activate the virtual environment every time you open the command prompt to work on your project.
 # source myworld/bin/activate
+
+
+#INSERTING DATA
+
+first of all we need to be in a python shell
+# python3 manage.py shell
+
+we need to access the class which we store our data
+
+# from members.models import Member
+here the members represents our app 
+we finally get access the Member Class that is in the models.py in  this case
+
+# member = Member(firstname='Emil', lastname='Refsnes')
+# member.save()
+by doing following commands we added the data to the database
+
+# Member.objects.all().values()
+for having a look at all
+
+# UPDATING DATA
+
+# from members.models import Member
+
+# x = Member.objects.all()[index] 
+index here represents the order of it (0,1,2,3....)
+# x.firstname = "name you want to replace "
+# x.save()
+
+# DELETING DATA
+
+# from members.models import Member
+
+# y = Member.objects.all()[index] 
+# y.delete()
+
+# UPDATING MODEL
+
+to add new column , you have to go the models.py which is in your app and add them
+
+from django.db import models
+
+my_web_site/members/models.py:
+
+from django.db import models
+
+class Member(models.Model):
+  firstname = models.CharField(max_length=255)
+  lastname = models.CharField(max_length=255)
+  phone = models.IntegerField(null=True)
+  joined_date = models.DateField(null=True)
+  ...
+  ...
+# python3 manage.py makemigrations members
+# python3 manage.py migrate
+and you have to get migrations done so that django can udnerstand that there is new models added 
