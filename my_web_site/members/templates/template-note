@@ -1,1 +1,2 @@
 #  % symbol is used for indicating that is a placeholder
+# Django will look for a file named 404.html in the templates folder, and display it when there is a 404 error.
