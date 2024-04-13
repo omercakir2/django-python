@@ -21,9 +21,12 @@ def main(request):
   return HttpResponse(template.render())
 
 def testing(request):
+  mymembers = Member.objects.all().values()
   template = loader.get_template('template.html')
-  context= {
-    'fruits' : ['apple' , 'banana' , 'cherry']
+  contextx= {
+    'fruits' : ['apple' , 'banana' , 'cherry'],
+    'firstname' : 'Omer',
+    'mymembers' : mymembers
   }
-  return HttpResponse(template.render(context,request))
+  return HttpResponse(template.render(contextx,request))
 # Create your views here.
