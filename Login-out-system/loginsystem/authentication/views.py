@@ -40,7 +40,7 @@ def signin(request):
         user = authenticate(username=username,password=pass1)#checks username given matches with password
         if user is not None:
                 login(request,user) 
-                fname = user.first_name
+                fname = user.get_username()
                 return render(request,"home.html",{'fname' : fname})  
         else:
              messages.error(request,"Not matched")
@@ -53,4 +53,7 @@ def signout(request):
     messages.success(request,'Logged out succesfully')  
 
     return redirect('home')
+def profile(request):
+    Users = User.objects.all().values()
     
+    return render(request,"profile.html",{'Users':Users})
