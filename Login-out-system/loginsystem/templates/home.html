@@ -11,7 +11,7 @@
         <title>Home Page</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="{% static 'style.css' %}">
+        <link rel="stylesheet" href="static/css/style.css">
     </head>
     <body>
         
@@ -25,16 +25,18 @@
         {% endfor %}
 
         <h2>Welcome to my website ! </h2>
-
+        <br>
         {% if user.is_authenticated %}
         <h3>Hello {{fname}}</h3>
         <h4>You're succesfully logged in.</h4>
         <button type="submit"><a href="/signout">Sign Out</a></button>
         <button type="submit"><a href="/profile">My profile details</a></button>
         {% else %}
+        <div class="submit-buttons">
+        </div>
         <button type="submit"><a href="/signin">Sign In</a></button>
         <button type="submit"><a href="/signup">Sign Up</a></button>
-        <button type="submit"><a href="/profile">My profile details</a></button>
+        <button type="submit"><a href="/profile">User List</a></button>
 
         {% endif %}
         <script src="" async defer></script>
