@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import render,redirect
 from django.template import loader 
 from django.http import HttpResponse
@@ -7,7 +8,8 @@ from django.contrib.auth import authenticate,login,logout
 # Create your views here.
 def home(request):
     template = loader.get_template('home.html')
-    return HttpResponse(template.render())
+    #return HttpResponse(template.render())
+    return render(request,"home.html")
 
 def signup(request):
     if request.method == "POST":
@@ -17,6 +19,20 @@ def signup(request):
         email = request.POST['email']
         pass1 = request.POST['pass1']
         pass2 = request.POST['pass2']
+        
+        if User.objects.filter(username=username):
+            messages.error(request,"This username is already used by someone else")
+            return redirect('home')
+        if User.objects.filter(email=email):
+            messages.error(request,"This e-mail is already used by someone else")
+            return redirect('home')
+        if len(username)>10:
+            messages.error(request,"Username must consist of 10 letters maximum")
+            return redirect('home')
+        if pass1 != pass2 :
+            messages.error(request,"The passwords do not match")
+            return redirect('home')
+            
 
         myuser = User.objects.create_user(username,email,pass1)
         myuser.first_name = fname
@@ -43,8 +59,9 @@ def signin(request):
                 fname = user.get_username()
                 return render(request,"home.html",{'fname' : fname})  
         else:
-             messages.error(request,"Not matched")
-             return redirect('home')
+            messages.error(request,"Not matched")
+            return redirect('home')
+            #return render(request,'home.html')
     return render(request,"signin.html") 
 def signout(request):
     #template = loader.get_template('signout.html')
@@ -52,7 +69,7 @@ def signout(request):
     logout(request)
     messages.success(request,'Logged out succesfully')  
 
-    return redirect('home')
+    return render(request,'home')
 def profile(request):
     Users = User.objects.all().values()
     
