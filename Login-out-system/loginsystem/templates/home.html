@@ -11,10 +11,11 @@
         <title>Home Page</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/../static/css/style.css">
-        
+        <link rel="stylesheet" href="{% static 'style.css' %}">        
     </head>
     <body>
+        <div class="container">
+    
         {% if messages %}
             Messages exist!
         {% else %}
@@ -28,7 +29,7 @@
         </button>
         </div>
         {% endfor %}
-        <h2>Welcome to my website ! </h2>
+        <h1>Welcome to my website ! </h1>
         <br>
         {% if user.is_authenticated %}
         <h3>Hello {{fname}}</h3>
@@ -44,5 +45,7 @@
 
         {% endif %}
         <script src="" async defer></script>
+    </div>
     </body>
+</div>
 </html>
