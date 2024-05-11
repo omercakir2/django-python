@@ -57,6 +57,7 @@ def signin(request):
         if user is not None:
                 login(request,user) 
                 fname = user.get_username()
+                messages.success(request,"You logged in succesfully")
                 return render(request,"home.html",{'fname' : fname})  
         else:
             messages.error(request,"Not matched")
@@ -68,8 +69,7 @@ def signout(request):
     #return HttpResponse(template.render())
     logout(request)
     messages.success(request,'Logged out succesfully')  
-
-    return render(request,'home')
+    return redirect('home')
 def profile(request):
     Users = User.objects.all().values()
     
