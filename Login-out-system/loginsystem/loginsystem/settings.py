@@ -34,10 +34,14 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
+    'django.contrib.sessions',  
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #'authentication',
+    'authentication.apps.AuthenticationConfig',
+    
 ]
+AUTH_USER_MODEL = 'authentication.CustomUser'  
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -125,3 +129,16 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# settings.py
+
+# settings.py
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'first.dj.project.anton@gmail.com'  # Your Gmail address
+EMAIL_HOST_PASSWORD = 'lsgp akzw eanv hotd'  # The app password you generated
+DEFAULT_FROM_EMAIL = 'first.dj.project.anton@gmail.com'  # Default email sender
