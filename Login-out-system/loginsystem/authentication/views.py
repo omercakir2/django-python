@@ -5,7 +5,38 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User #it is a ready-to-use data structure
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
-# Create your views here.
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.urls import reverse
+from django.conf import settings
+from django.shortcuts import redirect
+from django.contrib.auth import get_user_model
+from django.http import Http404
+from django.views import View
+
+class VerifyEmail(View):
+    def get(self, request, user_id, verification_code):
+        User = get_user_model()
+        try:
+            user = User.objects.get(pk=user_id, verification_code=verification_code)
+            if not user.is_verified:
+                user.is_verified = True
+                user.save()
+                return redirect('login')  # or redirect to a success page
+            else:
+                return redirect('login')  # or some page indicating already verified
+        except User.DoesNotExist:
+            raise Http404('User does not exist.')
+
+
+def send_verification_email(user):
+    verification_link = reverse('verify_email', args=[user.pk, user.verification_code])
+    verification_url = f'http://127.0.0.1:8000/{verification_link}'
+    subject = 'Verify Your Email Address'
+    html_message = render_to_string('verification_email.html', {'user': user, 'verification_link': verification_url})
+    send_mail(subject, '', settings.DEFAULT_FROM_EMAIL, [user.email], html_message=html_message)
+
+
 def home(request):
     template = loader.get_template('home.html')
     #return HttpResponse(template.render())
@@ -37,8 +68,10 @@ def signup(request):
         myuser = User.objects.create_user(username,email,pass1)
         myuser.first_name = fname
         myuser.last_name = lname
-
+        myuser.is_active = False
         myuser.save()
+        send_verification_email(myuser)
+        return redirect('registiration_complate')
 
         messages.success(request,"Your account is succesfully created !")
         return redirect('signin')
