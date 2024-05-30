@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User #it is a ready-to-use data structure
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
+from authentication.models import Verificate
 # Create your views here.
 def home(request):
     template = loader.get_template('home.html')
@@ -39,8 +40,9 @@ def signup(request):
         myuser.last_name = lname
 
         myuser.save()
-
-        messages.success(request,"Your account is succesfully created !")
+        verification = Verificate(user=myuser,is_verificate=False)
+        verification.save()
+        messages.success(request,"Your account is succesfully created but you need to active it ")
         return redirect('signin')
 
     #template = loader.get_template('signup.html')
@@ -71,6 +73,7 @@ def signout(request):
     messages.success(request,'Logged out succesfully')  
     return redirect('home')
 def profile(request):
-    Users = User.objects.all().values()
     
-    return render(request,"profile.html",{'Users':Users})
+    Users = User.objects.all().values()
+    Ver_list = Verificate.objects.all().values()  
+    return render(request,"profile.html",{'Users':Users,'Ver_list': Ver_list})

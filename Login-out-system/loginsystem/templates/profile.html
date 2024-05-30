@@ -15,12 +15,27 @@
     <body>
         <ul>
             <h3>Users</h3>
-            {% for i in Users %}
+            {% for i in Users  %}
+                
                 <li style="font-size:17px"> User {{i.username}}</li>
                 <h4>  Name : {{i.first_name}} </h4>
                 <h4> Surname : {{i.last_name}}</h4>
                 <h4> Mail Adress :{{i.email}}</h4>
-            {% endfor%}
+                <h4> Userid : {{i.id}}</h4>
+
+
+                
+            {% endfor %}
+            <h3>Verificate or not</h3>
+            {%for k in Ver_list%}
+                <li style="font-size:17px"> User ID {{k.user_id}}</li>
+                <h4> Verification : {{k.is_verificate}}</h4>
+                
+            {%endfor%}
+
+           
+             
+
         </ul>
         <button type="submit"><a href="/..">Return to home</a></button>
             
