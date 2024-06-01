@@ -1,4 +1,5 @@
 import re
+import traceback
 from django.shortcuts import render,redirect
 from django.template import loader 
 from django.http import HttpResponse
@@ -6,6 +7,8 @@ from django.contrib.auth.models import User #it is a ready-to-use data structure
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from authentication.models import Verificate
+from django.core.mail import send_mail
+from django.conf import settings
 # Create your views here.
 def home(request):
     template = loader.get_template('home.html')
@@ -20,6 +23,7 @@ def signup(request):
         email = request.POST['email']
         pass1 = request.POST['pass1']
         pass2 = request.POST['pass2']
+        sms = fname + '! You succesfully registered. You need to active your account to be able to sign in'
         
         if User.objects.filter(username=username):
             messages.error(request,"This username is already used by someone else")
@@ -42,6 +46,12 @@ def signup(request):
         myuser.save()
         verification = Verificate(user=myuser,is_verificate=False)
         verification.save()
+        try:
+            send_mail('Verification E-mail',sms,'settings.EMAIL_HOST_USER',[email],fail_silently=False)
+        except Exception as e:
+            print(f"Error : {e}") 
+            traceback.print_exc()
+        
         messages.success(request,"Your account is succesfully created but you need to active it ")
         return redirect('signin')
 
@@ -77,3 +87,6 @@ def profile(request):
     Users = User.objects.all().values()
     Ver_list = Verificate.objects.all().values()  
     return render(request,"profile.html",{'Users':Users,'Ver_list': Ver_list})
+
+
+
