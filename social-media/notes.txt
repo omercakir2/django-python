@@ -1,0 +1,7 @@
+# the virtual environment's name is 'vin-env'
+# to active it , type source vin-env/bin/activate
+
+# remember that django uses SQlite .
+# to access the database from terminal , we use 'sqlite3 db.sqlite3(whatever the name of database)'
+# to access any table in this db , we use ''select * from members_member''; 
+# it automaticlly names the table as 'appname_modelname'
