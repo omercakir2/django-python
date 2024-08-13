@@ -6,6 +6,7 @@ class Member(models.Model):
     join_date= models.DateField(null=True)
     phone = models.IntegerField(null=True)
     
+    
 # the actual code that being exucuted is this:
 # CREATE TABLE "members_member" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "firstname" varchar(255) NOT NULL, "lastname" varchar(255) NOT NULL); COMMIT;
 
