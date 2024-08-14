@@ -5,6 +5,7 @@ class Member(models.Model):
     lastname = models.CharField(max_length=255)
     join_date= models.DateField(null=True)
     phone = models.IntegerField(null=True)
+    email=models.EmailField(null=True)
     
     
 # the actual code that being exucuted is this:
