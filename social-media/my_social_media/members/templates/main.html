@@ -1,23 +1,43 @@
 {% extends "master.html" %}
 {% block title %}
   Home
-{% endblock title %}
+  {% endblock title %}
+  
+  {% block content %}
+  <style>
+    h1 {text-align: center;}
+    
+    li {
 
-{% block content %}
+      display: inline-block;
+      
+  }
+ 
+    
+  </style>
+
 <nav>
   <ul>
-      {% if user.is_authenticated%}
-          <li>Welcome, {{ user.first_name }}!</li>
-          <li><a href="{% url 'logout' %}">Logout</a></li>
-          <li><a href="/members/details/{{user.id}}">My profile details</a></li>
-      {% else %}
-          <li><a href="{% url 'login' %}">Login</a></li>
-          <li><a href="{% url 'register' %}">Register</a></li>
-          
-      {% endif %}
+    {% if user.is_authenticated%}
+    <li>Welcome, {{ user.first_name }}!</li>
+    <br>
+    <li><a href="{% url 'logout' %}">Logout</a></li>
+    <br>
+    <li><a href="/members/details/{{user.id}}">My profile details</a></li>
+    <br>
+    {% else %}
+    <br>
+    <li><a href="{% url 'login' %}">Login</a></li>
+    <br>
+    <li><a href="{% url 'register' %}">Register</a></li>
+    
+    {% endif %}
   </ul>
 </nav>
-  <h1>My social media</h1>
-  <h3>Members</h3>
-  <p>Check out all of the <a href="/members">members</a></p>
-{% endblock content %}
+<center>
+<h1>My social media</h1>
+
+  <h3 style="text-align:left;">Members</h3>
+  <p style="text-align:justify;">Check out all of the <a href="/members">members</a></p>
+</center>
+  {% endblock content %}
