@@ -25,7 +25,7 @@ def details(request,id):
 
 def home(request):
     template = loader.get_template('main.html')
-    return HttpResponse(template.render())
+    return render(request,'main.html')
 
 def register_view(request):
     if request.method == 'POST':
@@ -45,9 +45,13 @@ def login_view(request):
             email = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(request, email=email, password=password)
+            context = {
+            'user':user,
+            }
             if user is not None:
                 login(request, user)
-                return redirect('/')  # Replace 'home' with your desired redirect URL name
+                return redirect('/',context)  
+            
     else:
         form = MemberLoginForm()
     return render(request, 'login.html', {'form': form})
@@ -56,5 +60,6 @@ def logout_view(request):
     logout(request)
     return redirect('/')
     
-
+def success_view(request):
+    return render (request,'success.html')
 
