@@ -4,10 +4,12 @@
 {% endblock title %}
 
 {% block content %}
+<h3><a href="/">HOME</a></h3>
     <h2>Login</h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Login</button>
     </form>
+    
 {% endblock content %}
