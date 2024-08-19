@@ -4,12 +4,50 @@
 {% endblock title %}
 
 {% block content %}
-<h3><a href="/">HOME</a></h3>
-    <h2>Login</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
-    
+<center>
+  <style>
+    /* Center the form on the page */
+    form {
+        width: 345px;  /* Set a fixed width */
+        margin: 0 auto;  /* Align the form in the center horizontally */
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Style form fields */
+    form input, form textarea, form select {
+        width: 100%;  /* Make input fields stretch to full width of the form */
+        padding: 5px;
+        margin-bottom: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    /* Align the submit button */
+    form button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    form button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+  <h3 style="text-align: left;"><a href="/">HOME</a></h3>
+  <h2>Login</h2>
+  <form method="post" style="display: inline-block;">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" style="display:inline;">Login</button>
+  </form>
+  
+</center>
 {% endblock content %}
