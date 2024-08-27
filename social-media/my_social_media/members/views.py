@@ -6,6 +6,8 @@ from .models import Member
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from .forms import MemberRegistrationForm, MemberLoginForm
+from django.contrib import messages
+
 
 def members(request):
   members = Member.objects.all().values()    
@@ -33,6 +35,7 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            messages.success(request,'You are succesfully registered')
             return redirect('/')  # Replace 'home' with your desired redirect URL name
     else:
         form = MemberRegistrationForm()
@@ -50,6 +53,7 @@ def login_view(request):
             }
             if user is not None:
                 login(request, user)
+                messages.success(request,'You are succesfully loged in')
                 return redirect('/',context)  
             
     else:
@@ -58,6 +62,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
+    messages.success(request,'Loged out successfully')
     return redirect('/')
     
 def success_view(request):
