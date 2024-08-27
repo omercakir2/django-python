@@ -1,0 +1,12 @@
+{% autoescape off %}
+Hi {{ user.username }},
+
+Please click on the link below to confirm your registration:
+
+http://{{ domain }}/activate/{{ uid }}/{{ token }}
+
+Thank you for registering!
+
+Best regards,
+Your Team
+{% endautoescape %}
