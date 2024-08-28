@@ -104,4 +104,44 @@ def success_view(request):
 
 # members/views.py
 
+def forget_password_view(request):
+    if request.method=='POST':
+        email = request.POST.get('email')
+        if Member.objects.filter(email=email).exists():
+            user = Member.objects.get(email=email)
+            messages.success(request,'We have send you a link to reset your password')
+            current_site = get_current_site(request)
+            mail_subject = 'Reset Password'
+            message = render_to_string('reset_pass.html', {
+                'email': email,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': default_token_generator.make_token(user),
+            })
+            send_mail(mail_subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])            
+        else:
+            messages.error(request,'The e-mail you typed does not belong to any user.')
+            
 
+    return render(request, 'forgetpassword.html')        
+        
+def reset_password_view(request, uidb64, token):
+    # Decode the UID from base64
+    uid = urlsafe_base64_decode(uidb64).decode()
+        # Fetch the user from the UID
+    user = Member.objects.get(pk=uid)
+    message ={
+        'user':user
+    }
+    if request.method=='POST':
+        pass1=request.POST.get('pass1')
+        pass2=request.POST.get('pass2')
+        if pass1==pass2:
+            user.set_password(pass1)
+            user.save()
+            messages.success(request,'You are successfully changed your password')
+            
+        else:
+            messages.error(request,'Not matched')
+    return render(request,'new_password.html',message)
+        
