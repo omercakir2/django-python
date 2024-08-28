@@ -104,7 +104,8 @@ color: #fff; /* Default text color for all messages */
   <form method="post" style="display: inline-block;">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" style="display:inline;">Login</button>
+    <button type="submit" style="display:inline;">Login</button><br>
+    <a href="/login/forget-password">Forget my password</a>
   </form>
   
 </center>
