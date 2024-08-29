@@ -7,6 +7,9 @@
 
 {% block content %}
   <h1>{{ mymember.first_name }} {{ mymember.last_name }}</h1>
+  {% if user.is_authenticated %}
+  <a href="/members/details/{{mymember.id}}/edit">Edit my profile details</a>
+  {% endif %}
   
 
   <p>Last login: {{ mymember.last_login }}</p>
