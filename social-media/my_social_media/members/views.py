@@ -33,6 +33,20 @@ def details(request,id):
     }
     return HttpResponse(template.render(context,request))
 
+def edit_view(request,id):
+    currentmember = Member.objects.get(id=id)
+    if request.method=='POST':
+        try:
+            currentmember.first_name = request.POST.get('first_name')
+            currentmember.last_name = request.POST.get('last_name')
+            currentmember.save()
+            messages.success(request,'You are successfully changed your informations')
+        except:
+            messages.error('Something went wrong. Please try again')
+    context = {
+        'user':currentmember
+    }
+    return render(request,'edit.html',context)
 def home(request):
     template = loader.get_template('main.html')
     return render(request,'main.html')
