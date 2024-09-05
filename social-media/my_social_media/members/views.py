@@ -30,6 +30,7 @@ def details(request,id):
     template = loader.get_template('details.html')
     context = {
         'mymember':mymember,
+        'logged_in_user': request.user,
     }
     return HttpResponse(template.render(context,request))
 
@@ -99,6 +100,7 @@ def login_view(request):
             context = {
             'user':user,
             }
+            
             if user is not None:
                 login(request, user)
                 messages.success(request,'You are succesfully loged in')
