@@ -30,7 +30,7 @@ def details(request,id):
     template = loader.get_template('details.html')
     context = {
         'mymember':mymember,
-        'logged_in_user': request.user,
+        'logged_in_user': request.user,#to get the user who's loged in at the moment
     }
     return HttpResponse(template.render(context,request))
 
