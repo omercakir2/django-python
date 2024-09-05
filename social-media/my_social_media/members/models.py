@@ -23,6 +23,7 @@ class Member(AbstractBaseUser, PermissionsMixin):# AbstractBaseUser does the wor
     last_name = models.CharField(max_length=30)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    profile_picture = models.ImageField(upload_to='profile_pics/', default='default.jpg')
     
 
     objects = MemberManager()

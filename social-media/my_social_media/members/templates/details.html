@@ -9,11 +9,13 @@
   <h1>{{ mymember.first_name }} {{ mymember.last_name }}</h1>
   {% if user.is_authenticated %}
   <a href="/members/details/{{mymember.id}}/edit">Edit my profile details</a>
+
   {% endif %}
   
-
+  <p>ID : {{mymember.id}}</p>
   <p>Last login: {{ mymember.last_login }}</p>
    <p>Email : {{mymember.email}}</p> 
+   <img src="{{ mymember.profile_picture.url }}"  class="img-thumbnail" width="200">
   <p>Back to <a href="/members">Members</a></p>
   
 {% endblock %}

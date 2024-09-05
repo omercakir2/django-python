@@ -158,4 +158,6 @@ def reset_password_view(request, uidb64, token):
         else:
             messages.error(request,'Not matched')
     return render(request,'new_password.html',message)
-        
+
+def about_me_view(request):
+    return render(request,'aboutme.html')        
