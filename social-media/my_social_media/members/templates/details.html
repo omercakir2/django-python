@@ -14,11 +14,11 @@
   {% csrf_token %}
   <input type="file" name="profile_picture"><br>
   <button type="submit">Upload Picture</button>
-  <p>{{logedin}} loged in or not</p>
 </form>
 
 {% endif %}
-  
+
+
   <p>ID : {{mymember.id}}</p>
   <p>Last login: {{ mymember.last_login }}</p>
    <p>Email : {{mymember.email}}</p> 

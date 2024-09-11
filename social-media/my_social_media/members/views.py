@@ -15,6 +15,7 @@ from django.utils.encoding import force_str
 from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.tokens import default_token_generator
+from pathlib import Path
 
 
 def members(request):
@@ -27,10 +28,15 @@ def members(request):
 
 def details(request,id):
     mymember = Member.objects.get(id=id)
+    if request.method=='POST':
+        pp = request.FILES.get('profile_picture')
+        mymember.profile_picture=pp
+        mymember.save()
     template = loader.get_template('details.html')
     context = {
         'mymember':mymember,
         'logged_in_user': request.user,#to get the user who's loged in at the moment
+        
     }
     return HttpResponse(template.render(context,request))
 
@@ -43,7 +49,7 @@ def edit_view(request,id):
             currentmember.save()
             messages.success(request,'You are successfully changed your informations')
         except:
-            messages.error('Something went wrong. Please try again')
+            messages.error('Something went wrong. Please try again')    
     context = {
         'user':currentmember
     }
