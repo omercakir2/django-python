@@ -33,6 +33,7 @@ class Member(AbstractBaseUser, PermissionsMixin):# AbstractBaseUser does the wor
 
     def __str__(self):
         return self.email
+    
 
     
     

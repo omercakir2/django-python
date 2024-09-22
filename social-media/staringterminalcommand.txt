@@ -1,0 +1,5 @@
+deactivate
+cd / 
+cd Users/x/Desktop/Projects/Django/social-media
+source vir-env/bin/activate
+cd my_social_media

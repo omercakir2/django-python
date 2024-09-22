@@ -42,6 +42,9 @@ def details(request,id):
 
 def edit_view(request,id):
     currentmember = Member.objects.get(id=id)
+    if request.user != currentmember:
+        messages.error(request,'You are not allowed to change ')
+        return redirect("/")
     if request.method=='POST':
         try:
             currentmember.first_name = request.POST.get('first_name')
@@ -169,3 +172,4 @@ def reset_password_view(request, uidb64, token):
 
 def about_me_view(request):
     return render(request,'aboutme.html')        
+        
