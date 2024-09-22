@@ -140,3 +140,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'projectforthenewweb@outlook.com'  # Replace with your Outlook email
 EMAIL_HOST_PASSWORD = '(YfE6d)q_@^w)w7'  # Replace with your Outlook email password
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+SESSION_COOKIE_AGE = 300
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
