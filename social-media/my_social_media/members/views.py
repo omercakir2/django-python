@@ -16,15 +16,21 @@ from django.template.loader import render_to_string
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.tokens import default_token_generator
 from pathlib import Path
+from django.db.models import Q
 
 
 def members(request):
-  members = Member.objects.all().values()    
-  template = loader.get_template('allmembers.html')
-  context = {
-      'mymembers':members,
-  }
-  return HttpResponse(template.render(context,request))
+    if 'search_req' in request.GET:
+        search = request.GET['search_req']
+        multiple_q = Q(Q(first_name__icontains=search) | Q(last_name__icontains=search))
+        data = Member.objects.filter(multiple_q)
+    else:
+        data = Member.objects.all()
+    context = {
+      'mymembers':data,
+    }
+    return render(request,'allmembers.html',context)
+
 
 def details(request,id):
     mymember = Member.objects.get(id=id)
