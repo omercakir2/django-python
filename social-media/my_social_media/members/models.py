@@ -33,8 +33,18 @@ class Member(AbstractBaseUser, PermissionsMixin):# AbstractBaseUser does the wor
 
     def __str__(self):
         return self.email
+class Friendship(models.Model):
+    from_user = models.ForeignKey(Member, related_name='following', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(Member, related_name='followers', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    # on_delete=models.CASCADE means that when the user is deleted the all records about the user
+    # is also going to be deleted
     
+    class Meta:
+        unique_together = ('from_user', 'to_user')
 
+    def __str__(self):
+        return f"{self.from_user} follows {self.to_user}"
     
     
 # the actual code that being exucuted is this:
