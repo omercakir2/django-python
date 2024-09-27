@@ -7,6 +7,8 @@
 
 {% block content %}
   <h1>{{ mymember.first_name }} {{ mymember.last_name }}</h1>
+  <h3> Followers : {{followers_count}}</h3>
+  <h4> Following : {{following_count}}</h3>
   <img src="{{ mymember.profile_picture.url }}"  class="img-thumbnail" width="200"><br>
 {% if logged_in_user == mymember%}
 <a href="/members/details/{{mymember.id}}/edit">Edit my profile details</a>

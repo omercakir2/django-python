@@ -31,7 +31,7 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'login' %}">Login</a>
         </li>
-
+        
         <li class="nav-item">
           <a class="nav-link" href="{% url 'register' %}">Register</a>
         </li>
@@ -44,16 +44,85 @@
       </ul>
     </div>
   </nav>
-  
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
+  <style>
+    /* General Message Style */
+.message {
+  padding: 1px;
+  margin-bottom: 1px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  position: relative;
+  color: #fff; /* Default text color for all messages */
+    }
 
-    <!-- Bootstrap JS and dependencies (jQuery and Popper.js) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
+    .message {
+      padding: 1px;
+      margin-bottom: 1px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      position: relative;
+      color: #fff; /* Default text color for all messages */
+    }
+    
+    /* Success Message */
+    .message.success {
+      background-color:green;  /* Change this to your desired color */
+      color:white;                /* Text color */
+    }
+    
+    /* Info Message */
+    .message.info {
+      background-color: #17a2b8;  /* Change this to your desired color */
+      border-color: #138496;      /* Optional: change the border color */
+      color: #fff;                /* Text color */
+    }
+    .message.error{
+      background-color: red;
+      border-color: red;
+      color: white;
+    }
+    
+    
+    
+    h1 {text-align: center;}
+    
+    li {
+      
+      display: inline-block;
+      
+    }
+    .message.error {
+        background-color: red;
+        border-color: red;
+        color: white;
+    }
+    
+    
+    
+    
+  </style>
+
+  {% if messages %}
+    <div class="message">
+        {% for message in messages %}
+            <div class="message {{ message.level_tag }}">
+                {{ message }}
+                <button class="close" onclick="this.parentElement.style.display='none';">&times;</span>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+  
+  <div class="container">
+    {% block content %}{% endblock %}
+  </div>
+  
+  <!-- Bootstrap JS and dependencies (jQuery and Popper.js) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
     
 </body>
 <footer class="footer mt-auto py-3 bg-dark text-white"  >

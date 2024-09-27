@@ -1,8 +1,9 @@
 # Create your views here.
+from re import template
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from .models import Member
+from .models import Friendship, Member
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from .forms import MemberRegistrationForm, MemberLoginForm
@@ -34,12 +35,16 @@ def members(request):
 
 def details(request,id):
     mymember = Member.objects.get(id=id)
+    follower_count = mymember.followers.count()
+    following_count = mymember.following.count()
     if request.method=='POST':
         pp = request.FILES.get('profile_picture')
         mymember.profile_picture=pp
         mymember.save()
     template = loader.get_template('details.html')
     context = {
+        'followers_count':follower_count,
+        'following_count':following_count,
         'mymember':mymember,
         'logged_in_user': request.user,#to get the user who's loged in at the moment
         
@@ -50,7 +55,9 @@ def edit_view(request,id):
     currentmember = Member.objects.get(id=id)
     if request.user != currentmember:
         messages.error(request,'You are not allowed to change ')
-        return redirect("/")
+        #return redirect('/')
+        return redirect('details',id=id) 
+
     if request.method=='POST':
         try:
             currentmember.first_name = request.POST.get('first_name')
@@ -178,4 +185,13 @@ def reset_password_view(request, uidb64, token):
 
 def about_me_view(request):
     return render(request,'aboutme.html')        
-        
+    
+def follow_user(request, user_id):
+    user_to_follow = Member.objects.get(id=user_id)
+    Friendship.objects.get_or_create(from_user=request.user, to_user=user_to_follow)
+    return redirect('details', id=user_to_follow.id)
+
+def unfollow_user(request, user_id):
+    user_to_unfollow = Member.objects.get(id=user_id)
+    Friendship.objects.filter(from_user=request.user, to_user=user_to_unfollow).delete()
+    return redirect('details', id=user_to_unfollow.id)
