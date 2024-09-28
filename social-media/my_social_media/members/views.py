@@ -35,14 +35,30 @@ def members(request):
 
 def details(request,id):
     mymember = Member.objects.get(id=id)
+    #followers=mymember.followers.all()
+    followers = Friendship.objects.filter(to_user=mymember).values_list('from_user', flat=True)
+    following=mymember.following.all()
     follower_count = mymember.followers.count()
     following_count = mymember.following.count()
+    
+    #is_following = Friendship.objects.filter(from_user=request.user, to_user=mymember).exists()
+
     if request.method=='POST':
-        pp = request.FILES.get('profile_picture')
-        mymember.profile_picture=pp
-        mymember.save()
+        action = request.POST.get("action")
+        if action == "add_friend":
+            return follow_user(request,mymember.id)
+        elif action == "remove_friend":
+            return unfollow_user(request,mymember.id)
+        else:
+            pp = request.FILES.get('profile_picture')
+            mymember.profile_picture=pp
+            mymember.save()
+            
     template = loader.get_template('details.html')
     context = {
+        #'is_following':is_following,
+        'followers':followers,
+        'following':following,
         'followers_count':follower_count,
         'following_count':following_count,
         'mymember':mymember,

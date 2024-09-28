@@ -10,6 +10,8 @@
   <h3> Followers : {{followers_count}}</h3>
   <h4> Following : {{following_count}}</h3>
   <img src="{{ mymember.profile_picture.url }}"  class="img-thumbnail" width="200"><br>
+  
+  
 {% if logged_in_user == mymember%}
 <a href="/members/details/{{mymember.id}}/edit">Edit my profile details</a>
 <form method="POST" enctype="multipart/form-data">
@@ -17,8 +19,20 @@
   <input type="file" name="profile_picture"><br>
   <button type="submit">Upload Picture</button>
 </form>
-
 {% endif %}
+
+  
+<form method="post">
+  {% csrf_token %}
+      {% if logged_in_user.is_authenticated and logged_in_user != mymember %}
+        {% if logged_in_user.id in followers %}
+          <button type="submit" name="action" value="remove_friend" class="btn btn-danger">Remove Friend</button>
+        {% else %}  
+          <button type="submit" name="action" value="add_friend" class="btn btn-primary">Add Friend</button>
+        {% endif %}
+      {% endif %}  
+</form>
+
 
 
   <p>ID : {{mymember.id}}</p>
