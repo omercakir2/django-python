@@ -1,0 +1,43 @@
+{% extends "master.html" %}
+{% block title %}
+Followers of {{mymember.first_name}} {{mymember.last_name}}
+  
+{% endblock title %}
+{% block content %}
+  
+<table class="table table-white">
+    <center>
+        <h2> Followers of {{mymember.first_name}} {{mymember.last_name}}</h2>
+    </center>
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Following</th>
+            <th scope="col">Follower</th>
+            <th scope="col"> PP</th>
+        </tr>
+    </thead>
+    <tbody>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" name="search_req" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        {% for follower in followers  %}
+        
+        <tr>
+            <td>{{follower.id}}</td>
+            <td><a href="details/{{follower.id}}">{{follower.first_name}}</a> </td>
+            <td>{{follower.last_name}}</td>
+            <td>{{follower.email}}</td>
+            <td>{{following_count}}</td>
+            <td>{{followers_count}}</td>
+            <td><img src="{{ follower.profile_picture.url }}"  class="img-thumbnail" width="200"></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
+  
