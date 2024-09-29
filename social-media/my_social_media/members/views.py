@@ -1,4 +1,5 @@
 # Create your views here.
+from multiprocessing import context
 from re import template
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
@@ -211,3 +212,23 @@ def unfollow_user(request, user_id):
     user_to_unfollow = Member.objects.get(id=user_id)
     Friendship.objects.filter(from_user=request.user, to_user=user_to_unfollow).delete()
     return redirect('details', id=user_to_unfollow.id)
+def followers(request,id):
+    mymember = Member.objects.get(id=id)
+    followers_id = Friendship.objects.filter(to_user=mymember).values_list('from_user', flat=True)
+    followers = Member.objects.filter(id__in=followers_id)
+    context={
+        'mymember':mymember,
+        'followers':followers,
+        
+    }
+    return render(request,'followers.html',context)
+def following(request,id):
+    mymember = Member.objects.get(id=id)
+    followings_id = Friendship.objects.filter(from_user=mymember).values_list('to_user', flat=True)
+    followings = Member.objects.filter(id__in=followings_id)
+    context={
+        'mymember':mymember,
+        'followings':followings,
+        
+    }
+    return render(request,'followings.html',context)

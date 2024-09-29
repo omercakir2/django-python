@@ -30,8 +30,8 @@
       <td><a href="details/{{user.id}}">{{user.first_name}}</a> </td>
       <td>{{user.last_name}}</td>
       <td>{{user.email}}</td>
-      <td>{{following_count}}</td>
-      <td>{{followers_count}}</td>
+      <td>{{user.following_count}}</td>
+      <td>{{user.followers}}</td>
       <td><img src="{{ user.profile_picture.url }}"  class="img-thumbnail" width="200"></td>
     </tr>
     {% endfor %}

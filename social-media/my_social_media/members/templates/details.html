@@ -7,8 +7,8 @@
 
 {% block content %}
   <h1>{{ mymember.first_name }} {{ mymember.last_name }}</h1>
-  <h3> Followers : {{followers_count}}</h3>
-  <h4> Following : {{following_count}}</h3>
+  <h3> <a href="/followers/{{mymember.id}}"> Followers : </a> {{followers_count}} </h3> 
+  <h3> <a href="/followings/{{mymember.id}}"> Following : </a> {{following_count}} </h3> 
   <img src="{{ mymember.profile_picture.url }}"  class="img-thumbnail" width="200"><br>
   
   
