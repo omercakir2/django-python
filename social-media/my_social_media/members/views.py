@@ -231,4 +231,5 @@ def following(request,id):
         'followings':followings,
         
     }
+    deneme = 'deneme'
     return render(request,'followings.html',context)
