@@ -17,6 +17,9 @@ urlpatterns = [
     path('reset-password/<uidb64>/<token>/', views.reset_password_view, name='reset_password'),
     path('members/details/<int:id>/edit',views.edit_view,name='edit'),
     path('creator/',views.about_me_view,name='about_me'),
+    path('followings/<int:id>',views.following,name='followings'),
+    path('followers/<int:id>',views.followers,name='followers'),
+    
 
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
