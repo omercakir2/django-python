@@ -231,5 +231,8 @@ def following(request,id):
         'followings':followings,
         
     }
+<<<<<<< HEAD
     deneme = 'deneme'
+=======
+>>>>>>> 1d063d379170f00a4a8ffc5ea1d9d6f9de68185e
     return render(request,'followings.html',context)
